@@ -1,5 +1,5 @@
 custom_social_login.hybridauth_form:
-  path: '/admin/config/custom_social_login/hybridauth'
+  path: '/admin/config/hybridauth'
   defaults:
     _form: '\Drupal\custom_social_login\Form\HybridauthForm'
     _title: 'Hybridauth Configuration'
