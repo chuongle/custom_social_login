@@ -6,7 +6,6 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\Core\Session\SessionManager;
 use Drupal\custom_social_login\HybridauthInstance;
 
 /**
@@ -206,12 +205,13 @@ function custom_social_login_hybridauth_make_username($data, $allow_empty = FALS
  */
 function custom_social_login_hybridauth_session_start() {
   // Make sure that a user session exists.
-  \Drupal::service('session')->start();
+  session_start();
   // Special handling for HTTPS with normal session IDs and secure session IDs.
   // Duplicated sessions are created, so we need to pull out the correct session
   // data.
   if (Drupal::request()->isSecure()) {
   	$db = \Drupal::database();
+    // NEED TO CIRCLE BACK TO USE CORRECT COLUMN FROM DATABASE
     $session = $db->query('SELECT session FROM {sessions} WHERE sid = :sid AND ssid = :sid', array('sid' => session_id()))->fetchField();
     if ($session) {
       // Overwrite $_SESSION with the data.
@@ -246,7 +246,6 @@ function custom_social_login_user_login($account) {
         if (is_array($hybridauth_session_data_current)) {
           $hybridauth_session_data = serialize(array_merge(unserialize($hybridauth_session_data), $hybridauth_session_data_current));
         }
-        \Drupal::logger('custom_social_login')->error('Get here');
         // Call Hybrid_Auth::restoreSessionData() to set stored data.
         $hybridauth->restoreSessionData($hybridauth_session_data);
         custom_social_login_hybridauth_session_save($hybridauth_session_data, $account->id());

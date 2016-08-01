@@ -5,6 +5,7 @@ namespace Drupal\custom_social_login\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\user\Entity\User;
 use Drupal\custom_social_login\HybridauthInstance;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Class HybridauthController.
@@ -14,7 +15,8 @@ use Drupal\custom_social_login\HybridauthInstance;
 class HybridauthController extends ControllerBase {
   
   public function endpoint() {
-    \Hybrid_Endpoint::process();
+    custom_social_login_hybridauth_session_start();
+    require_once drupal_get_path('module', 'custom_social_login') . '/vendor/hybridauth/hybridauth/hybridauth/index.php';
   }
 
   /**
@@ -24,9 +26,7 @@ class HybridauthController extends ControllerBase {
    *
    */
   public function processAuth($provider) {
-    // custom_social_login_hybridauth_session_start();
-    session_start();
-
+    custom_social_login_hybridauth_session_start();
     $hybridauth = HybridauthInstance::getHybridauthInstance();
 
     $error = NULL;
@@ -48,7 +48,7 @@ class HybridauthController extends ControllerBase {
       drupal_set_message('User is login');
     }
 
-    return ['#markup' => 'Hello ' . $user_profile->displayName];
+    return new RedirectResponse(\Drupal::url('user.page'));
   }
 
   public function handleError($error) {

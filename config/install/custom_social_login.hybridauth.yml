@@ -5,14 +5,19 @@ providers:
     keys: 
       id: 152996399713-sc5g4ulpuqactqulvo0bsd521kfmph1q.apps.googleusercontent.com
       secret: CaI8VLXtvNfUZIvCwa4JfUp7
+      scope: https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email
+      hauth_return_to: / 
   Facebook:
     enabled: true
     keys:
       id: 486155964872833
       secret: fe5ee379a36e810a612d287fd51ddf10
     trustForwarded: false
+    scope: email, user_about_me
+    hauth_return_to: /
   Twitter:
     enabled: true
     keys:
       key: twitter-key
       secret: twitter-secret
+    hauth_return_to: /

@@ -147,7 +147,7 @@ class HybridauthForm extends ConfigFormBase {
     $config->set('providers.Google.keys.id', $google_key)
            ->set('providers.Google.keys.secret', $google_secret)
            ->set('providers.Facebook.keys.id', $facebook_key)
-           ->set('providers.Facebook.keys.secret', $facebook_secret);
+           ->set('providers.Facebook.keys.secret', $facebook_secret)
            ->set('providers.Twitter.keys.key', $twitter_key)
            ->set('providers.Twitter.keys.secret', $twitter_secret);
     $config->save();
