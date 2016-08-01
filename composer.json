@@ -1,0 +1,16 @@
+{
+  "name": "drupal/custom_social_login",
+  "type": "drupal-module",
+  "description": "Custom module that handle login using Hybridauth.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/custom_social_login",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/custom_social_login",
+    "source": "http://cgit.drupalcode.org/custom_social_login"
+  },
+  "require": { 
+    "hybridauth/hybridauth": "^2.6"
+  }
+}

@@ -1,0 +1,18 @@
+base_url: '/hybridauth/endpoint'
+providers:
+  Google:
+    enabled: true
+    keys: 
+      id: 152996399713-sc5g4ulpuqactqulvo0bsd521kfmph1q.apps.googleusercontent.com
+      secret: CaI8VLXtvNfUZIvCwa4JfUp7
+  Facebook:
+    enabled: true
+    keys:
+      id: 486155964872833
+      secret: fe5ee379a36e810a612d287fd51ddf10
+    trustForwarded: false
+  Twitter:
+    enabled: true
+    keys:
+      key: twitter-key
+      secret: twitter-secret

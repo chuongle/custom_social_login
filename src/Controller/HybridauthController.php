@@ -1,0 +1,212 @@
+<?php
+
+namespace Drupal\custom_social_login\Controller;
+
+use Drupal\Core\Controller\ControllerBase;
+use Drupal\user\Entity\User;
+use Drupal\custom_social_login\HybridauthInstance;
+
+/**
+ * Class HybridauthController.
+ *
+ * @package Drupal\custom_social_login\Controller
+ */
+class HybridauthController extends ControllerBase {
+  
+  public function endpoint() {
+    \Hybrid_Endpoint::process();
+  }
+
+  /**
+   * Process Auth.
+   *
+   * @param $identifier
+   *
+   */
+  public function processAuth($provider) {
+    // custom_social_login_hybridauth_session_start();
+    session_start();
+
+    $hybridauth = HybridauthInstance::getHybridauthInstance();
+
+    $error = NULL;
+    $user_profile = NULL;
+    try {
+      $authentication = $hybridauth->authenticate(ucwords($provider));
+      $user_profile = (array) ($authentication->getUserProfile());
+      $user_profile['provider'] = $provider;
+    }
+    catch(Exception $e) {
+      \Drupal::logger('custom_social_login')->error('Error when requesting User Profile from ' . $provider);
+      $error = $e->getCode();
+    }
+    
+    if (!is_null($error)) {
+      $this->handleError($error); 
+    } else {
+      $this->startProcessAuth($user_profile);
+      drupal_set_message('User is login');
+    }
+
+    return ['#markup' => 'Hello ' . $user_profile->displayName];
+  }
+
+  public function handleError($error) {
+    if (\Drupal::currentUser()->isAnonymous()) {
+      // Delete session only if it contains just HybridAuth data.
+      $delete_session = TRUE;
+      foreach ($_SESSION as $key => $value) {
+        if (substr($key, 0, 4) != 'HA::') {
+          $delete_session = FALSE;
+        }
+      }
+      if ($delete_session) {
+        session_destroy();
+      }
+    }
+    switch ($error) {
+      case 5:
+        // Authentication failed. The user has canceled the authentication or
+        // the provider refused the connection.
+        break;
+      case 0:
+        // Unspecified error.
+      case 1:
+        // Hybridauth configuration error.
+      case 2:
+        // Provider not properly configured.
+      case 3:
+        // Unknown or disabled provider.
+      case 4:
+        // Missing provider application credentials (your application id, key
+        // or secret).
+      case 6:
+        // User profile request failed.
+      case 7:
+        // User not connected to the provider.
+      case 8:
+        // Provider does not support this feature.
+      default:
+        // Report the error - this message is not shown to anonymous users as
+        // we destroy the session - see below.
+        drupal_set_message(t('There was an error processing your request.'), 'error');
+    }
+    throw new ServiceUnavailableHttpException();
+  }
+  public function startProcessAuth($data) {
+    $user = \Drupal::currentUser();
+
+    // // Check if user is already logged in, tries to add new identity
+    if(\Drupal::currentUser()->isAuthenticated()) {
+      // Identity is already registered.
+      $identity = custom_social_login_hybridauth_identity_load($data);
+      if ($identity = custom_social_login_hybridauth_identity_load($data)) {
+        // Registered to this user.
+        if ($user->id() == $identity['uid']) {
+          drupal_set_message(t('You have already registered this identity.'));
+        }
+        // Registered to another user.
+        else {
+          drupal_set_message(t('This identity is registered to another user.'), 'error');
+          // _hybridauth_window_close();
+        }
+      }
+      else {
+        custom_social_login_hybridauth_identity_save($data);
+        drupal_set_message(t('New identity added.'));
+      }
+    }
+
+    if ($identity = custom_social_login_hybridauth_identity_load($data)) {
+      // Check if user is blocked.
+      if ($account = custome_social_login_hybridauth_user_is_blocked_by_uid($identity['uid'])) {
+        drupal_set_message(t('The username %name has not been activated or is blocked.', array('%name' => $account->name)), 'error');
+      }
+      // Check for email verification timestamp.
+      elseif (!custom_social_login_hybridauth_user_login_access_by_uid($identity['uid'])) {
+        $data = unserialize($identity['data']);
+        drupal_set_message(t('You need to verify your e-mail address - !email.', array('!email' => $data['email'])), 'error');
+        drupal_set_message(t('A welcome message with further instructions has been sent to your e-mail address.'));
+        // _hybridauth_mail_notify('hybridauth_email_verification', user_load($identity['uid']));
+      }
+      else {
+        $user_id = $identity['uid'];
+        $user = user_load($user_id);
+        user_login_finalize($user);
+      }
+    }
+    else {
+      $user = $this->registerNewUser($data);
+      custom_social_login_hybridauth_identity_save($data, $user->id());
+      user_login_finalize($user);
+    }
+  }
+
+  /**
+   * Identify if identifier already exists
+   *
+   * @return bool
+   *   Return if identifier already exists
+   */
+  public function identifier_exists($identifier) {
+
+  }
+
+  /**
+   * Create user account
+   * @param array $data
+   *
+   * @return $user object
+   *
+   */
+  public function registerNewUser($data) {
+    $name = custom_social_login_hybridauth_make_username($data);
+    $user_info = array(
+      'name' => $name,
+      'pass' => user_password(),
+      'mail' => $data['email'],
+      'status' => 1,
+      'init' => $data['email'],
+      'roles' => ['authenticated']
+    );
+    $user = User::create($user_info);
+    $user->enforceIsNew();
+    $user->activate();
+    $user->save();
+    drupal_set_message('User is created');
+    return $user;
+  }
+
+  /**
+   * Return user's first name.
+   *
+   * @param int $identifier
+   *
+   * @return string
+   */
+  public function getFirstName($identifier) {
+    
+  }
+
+
+  /**
+   * Return user's last name.
+   *
+   * @param int $identifier
+   *
+   * @return string
+   */
+  public function getLastName($identifier) {
+
+  }
+
+  /**
+   * Return user's email address
+   *
+   * @param int $identifier
+   *
+   * @return string
+   */
+  public function getEmail($identifier) {
+  }
+}

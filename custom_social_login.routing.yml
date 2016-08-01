@@ -1,0 +1,35 @@
+custom_social_login.hybridauth_form:
+  path: '/admin/config/custom_social_login/hybridauth'
+  defaults:
+    _form: '\Drupal\custom_social_login\Form\HybridauthForm'
+    _title: 'Hybridauth Configuration'
+  requirements:
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE
+
+
+# In order to to create pages it is necessary to define routes for them.
+# A route maps a URL path to a controller. It defines what function
+# or method will be called when a URL is accessed.
+# If the user accesses http://drupal8.dev//hybridauth/endpoint, the routing
+# system will look for a route with that path. In this case it will find a
+# match, and execute the _controller callback. In this case the callback is
+# defined as a classname
+# ("\Drupal\custom_social_login\Controller\HybridauthController")
+# and a method ("login").
+custom_social_login.hybridauth_controller_login:
+  path: '/login/{provider}'
+  defaults:
+    _controller: '\Drupal\custom_social_login\Controller\HybridauthController::processAuth'
+    _title: 'Process Auth'
+  requirements:
+    _access: 'TRUE'
+
+custom_social_login.hybridauth_controller_endpoint:
+  path: '/hybridauth/endpoint'
+  defaults:
+    _controller: '\Drupal\custom_social_login\Controller\HybridauthController::endpoint'
+    _title: 'Endpoint'
+  requirements:
+    _access: 'TRUE'

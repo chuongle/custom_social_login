@@ -1,0 +1,7 @@
+custom_social_login.hybridauth_form:
+  title: 'Hybridauth Configuration'
+  route_name: custom_social_login.hybridauth_form
+  description: 'Configuration for Hybridauth'
+  parent: system.admin_config
+  weight: 99
+
