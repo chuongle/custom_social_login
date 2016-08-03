@@ -10,10 +10,9 @@ providers:
   Facebook:
     enabled: true
     keys:
-      id: 486155964872833
-      secret: fe5ee379a36e810a612d287fd51ddf10
-    trustForwarded: false
-    scope: email, user_about_me
+      id: 1192513324104460
+      secret: f63b3d07c030f1855bc24254e7ce4bfc
+    scope: 'email, user_about_me'
     hauth_return_to: /
   Twitter:
     enabled: true

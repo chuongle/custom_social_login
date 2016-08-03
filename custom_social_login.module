@@ -180,7 +180,7 @@ function custom_social_login_hybridauth_make_username($data, $allow_empty = FALS
 
   // Check for empty username and use default one if empty is not allowed.
   if (empty($hybridauth_name) && !$allow_empty) {
-    $hybridauth_name = $desired_name = 'hybridauth_user';
+    $hybridauth_name = $desired_name = $data['email'];
   }
 
   if (!empty($hybridauth_name)) {
@@ -204,8 +204,11 @@ function custom_social_login_hybridauth_make_username($data, $allow_empty = FALS
  * Initialize the user session before using the HybridAuth library.
  */
 function custom_social_login_hybridauth_session_start() {
+  $session = \Drupal::service('session');
   // Make sure that a user session exists.
-  session_start();
+  if(!$session->isStarted()) {
+    $session->start();
+  }
   // Special handling for HTTPS with normal session IDs and secure session IDs.
   // Duplicated sessions are created, so we need to pull out the correct session
   // data.
@@ -277,4 +280,30 @@ function custom_social_login_hybridauth_session_save($data, $uid = NULL) {
     ->key(array('uid' => $uid))
     ->fields(array('data' => $data, 'updated' => REQUEST_TIME))
     ->execute();
+}
+
+
+/**
+ * Implements hook_user_delete().
+ */
+function custom_social_login_user_delete($account) {
+  custom_social_login_hybridauth_identity_delete_by_uid($account->id());
+  custom_social_login_hybridauth_session_delete_by_uid($account->id());
+}
+
+
+function custom_social_login_hybridauth_identity_delete_by_uid($uid) {
+  $db = \Drupal::database();
+  $result = $db->delete('hybridauth_identity')
+    ->condition('uid', $uid, '=')
+    ->execute();
+  return $result;
+}
+
+function custom_social_login_hybridauth_session_delete_by_uid($uid) {
+  $db = \Drupal::database();
+  $result = $db->delete('hybridauth_session')
+    ->condition('uid', $uid, '=')
+    ->execute();
+  return $result;
 }

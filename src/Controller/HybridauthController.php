@@ -135,21 +135,18 @@ class HybridauthController extends ControllerBase {
         user_login_finalize($user);
       }
     }
+    elseif($account = user_load_by_mail($data['email'])) {
+      if($data['email'] == $data['emailVerified']) {
+        custom_social_login_hybridauth_identity_save($data, $account->id());
+        drupal_set_message(t('New identity added.'));
+        user_login_finalize($account);
+      }
+    }
     else {
       $user = $this->registerNewUser($data);
       custom_social_login_hybridauth_identity_save($data, $user->id());
       user_login_finalize($user);
     }
-  }
-
-  /**
-   * Identify if identifier already exists
-   *
-   * @return bool
-   *   Return if identifier already exists
-   */
-  public function identifier_exists($identifier) {
-
   }
 
   /**
