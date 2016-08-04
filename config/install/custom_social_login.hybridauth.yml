@@ -1,22 +1,46 @@
-base_url: '/hybridauth/endpoint'
-providers:
-  Google:
-    enabled: true
-    keys: 
-      id: 152996399713-sc5g4ulpuqactqulvo0bsd521kfmph1q.apps.googleusercontent.com
-      secret: CaI8VLXtvNfUZIvCwa4JfUp7
-      scope: https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email
-      hauth_return_to: / 
-  Facebook:
-    enabled: true
-    keys:
-      id: 1192513324104460
-      secret: f63b3d07c030f1855bc24254e7ce4bfc
-    scope: 'email, user_about_me'
-    hauth_return_to: /
-  Twitter:
-    enabled: true
-    keys:
-      key: twitter-key
-      secret: twitter-secret
-    hauth_return_to: /
+imperial:
+  base_url: '/hybridauth/endpoint'
+  providers:
+    Google:
+      enabled: true
+      keys: 
+        id: google1_id
+        secret: google1_secret
+        scope: https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email
+      hauth_return_to: /
+    Facebook:
+      enabled: true
+      keys:
+        id: facebook1_id
+        secret: facebook1_secret
+      scope: 'email, user_about_me'
+      hauth_return_to: /
+    Twitter:
+      enabled: true
+      keys:
+        key: twitter1_key
+        secret: twitter1_secret
+      hauth_return_to: /
+dixie:
+  base_url: '/hybridauth/endpoint'
+  providers:
+    Google:
+      enabled: true
+      keys: 
+        id: google2_id
+        secret: google2_secret
+        scope: https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email
+      hauth_return_to: /
+    Facebook:
+      enabled: true
+      keys:
+        id: facebook2_id
+        secret: facebook2_secret
+      scope: 'email, user_about_me'
+      hauth_return_to: /
+    Twitter:
+      enabled: true
+      keys:
+        key: twitter2_key
+        secret: twitter2_secret
+      hauth_return_to: /

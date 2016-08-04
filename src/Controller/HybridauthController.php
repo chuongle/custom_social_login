@@ -157,6 +157,7 @@ class HybridauthController extends ControllerBase {
    *
    */
   public function registerNewUser($data) {
+    $domain_negotiator = \Drupal::service('domain.negatiator');
     $name = custom_social_login_hybridauth_make_username($data);
     $user_info = array(
       'name' => $name,
@@ -164,7 +165,8 @@ class HybridauthController extends ControllerBase {
       'mail' => $data['email'],
       'status' => 1,
       'init' => $data['email'],
-      'roles' => ['authenticated']
+      'roles' => ['authenticated'],
+      'field_domain_access' => array('target_id' => $domain_negotiator->getActiveId()),
     );
     $user = User::create($user_info);
     $user->enforceIsNew();
