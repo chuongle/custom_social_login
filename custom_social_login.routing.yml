@@ -33,3 +33,27 @@ custom_social_login.hybridauth_controller_endpoint:
     _title: 'Endpoint'
   requirements:
     _access: 'TRUE'
+
+custom_social_login.email_login_form:
+  path: '/custom_social_login/form/email_login'
+  defaults:
+    _form: '\Drupal\custom_social_login\Form\EmailLoginForm'
+    _title: 'EmailLoginForm'
+  requirements:
+    _access: 'TRUE'
+
+custom_social_login.create_account_form:
+  path: '/custom_social_login/form/create_account'
+  defaults:
+    _form: '\Drupal\custom_social_login\Form\CreateAccountForm'
+    _title: 'CreateAccountForm'
+  requirements:
+    _access: 'TRUE'
+
+custom_social_login.update_display_name_and_password_form:
+  path: '/custom_social_login/form/update_display_name_and_password'
+  defaults:
+    _form: '\Drupal\custom_social_login\Form\UpdateDisplayNameAndPasswordForm'
+    _title: 'UpdateDisplayNameAndPasswordForm'
+  requirements:
+    _access: 'TRUE'
