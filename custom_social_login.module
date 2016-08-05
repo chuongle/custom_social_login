@@ -26,7 +26,7 @@ function custom_social_login_help($route_name, RouteMatchInterface $route_match)
 
 function custom_social_login_theme() {
   $theme['login'] = [
-    'variables' => ['login_form' => NULL, 'create_account' => NULL],
+    'variables' => ['login_form' => NULL, 'create_account' => NULL, 'update_display_name_and_email' => NULL],
     'template' => 'login',
   ];
   return $theme;

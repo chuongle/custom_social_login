@@ -4,9 +4,9 @@
   <a class="nav-account-signup-spacing tertiary" data-ix="modal-login-show" href="#">Sign In</a>
 </div>
 
-<div class="login-modal" data-ix="modal-bg-initial-appearance">
+{# <div class="login-modal" data-ix="modal-bg-initial-appearance"> #}
   <div class="modal-wrapper txt-centered">
-    <div id="start-login">
+    <div id="social-login-wrapper" class="login-steps">
       <a class="modal side-nav-close-wrapper w-clearfix w-inline-block" data-ix="modal-login-hide" href="#">
         <div class="main-nav-link-bg-highlight side-nav-close">Close</div>
         <img height="14" src="/{{directory}}/images/side nav close x.svg" width="14"></a>
@@ -16,77 +16,56 @@
       <p>
         You need an account to like and rate recipes, comment, and share a recipe with the community.
       </p>
-      <a class="btn-login fb w-button" href="#">Continue with Facebook</a>
-      <a class="btn-login tw w-button" href="#">Continue with Twitter</a>
-      <a class="btn-login gl w-button" href="#">Continue with Google</a>
+      <a class="btn-login fb w-button" href="/login/Facebook">Continue with Facebook</a>
+      <a class="btn-login tw w-button" href="/login/Twitter">Continue with Twitter</a>
+      <a class="btn-login gl w-button" href="/login/Google">Continue with Google</a>
       <div class="login-alt">
-        <a href="#">Sign in</a>
+        <a href="#" class="sign-in-link">Sign in</a>
         or
-        <a href="#">Create an Account</a>
+        <a href="#" class="create-an-account-link">Create an Account</a>
         with email
       </div>
     </div>
-  </div>
-  <div class="modal-wrapper txt-centered">
-    <a class="modal side-nav-close-wrapper w-clearfix w-inline-block" data-ix="modal-login-hide" href="#">
-      <div class="main-nav-link-bg-highlight side-nav-close">Cancel</div>
-      <img height="14" src="/{{directory}}/images/side nav close x.svg" width="14"></a>
-    <img class="login logo" src="/{{directory}}/images/Imperial_Brand_Logo.svg" width="100">
-    {{ login_form }}
-    <img class="logo w-hidden-main w-hidden-medium w-hidden-small w-hidden-tiny" src="/{{directory}}/images/DixieCrystals_Color.svg" width="100">
-    <div class="login-alt">
-      <a href="#">Forgot password?</a>
-      or use
-      <a href="#">Social Login</a>
+    <div id="email-login-wrapper" class="login-steps w-hidden-main">
+      <a class="modal side-nav-close-wrapper w-clearfix w-inline-block" data-ix="modal-login-hide" href="#">
+        <div class="main-nav-link-bg-highlight side-nav-close">Cancel</div>
+        <img height="14" src="/{{directory}}/images/side nav close x.svg" width="14"></a>
+        <img class="login logo" src="/{{directory}}/images/Imperial_Brand_Logo.svg" width="100">
+      {{ login_form }}
+      <img class="logo w-hidden-main w-hidden-medium w-hidden-small w-hidden-tiny" src="/{{directory}}/images/DixieCrystals_Color.svg" width="100">
+      <div class="login-alt">
+        <a href="#" class="forgot-password-link">Forgot password?</a>
+        or use
+        <a href="#" class="social-login-link">Social Login</a>
+      </div>
     </div>
-  </div>
-  <div class="modal-wrapper txt-centered">
-    <a class="modal side-nav-close-wrapper w-clearfix w-inline-block" data-ix="modal-login-hide" href="#">
-      <div class="main-nav-link-bg-highlight side-nav-close">Cancel</div>
-      <img height="14" src="/{{directory}}/images/side nav close x.svg" width="14"></a>
+    <div id="create-account-wrapper" class="login-steps w-hidden-main">
+      <a class="modal side-nav-close-wrapper w-clearfix w-inline-block" data-ix="modal-login-hide" href="#">
+        <div class="main-nav-link-bg-highlight side-nav-close">Cancel</div>
+        <img height="14" src="/{{directory}}/images/side nav close x.svg" width="14">
+      </a>
       <img class="login logo" src="/{{directory}}/images/Imperial_Brand_Logo.svg" width="100">
-    {{ create_account }}
-    <img class="logo w-hidden-main w-hidden-medium w-hidden-small w-hidden-tiny" src="/{{directory}}/images/DixieCrystals_Color.svg" width="100">
-    <div class="login-alt">
-      <a href="#">Already have an account?</a>
-      or use
-      <a href="#">Social Sign In</a>
-    </div>
-  </div>
-  <div class="modal-wrapper txt-centered">
-    <img class="login logo" src="/{{directory}}/images/Imperial_Brand_Logo.svg" width="100">
-    <p>
-      We sent a verification link to your email. Please check your inbox.
-    </p>
-    <a class="btn-login w-inline-block" data-ix="modal-login-hide" href="#">
-      <div>OK</div>
-    </a>
-    <img class="logo w-hidden-main w-hidden-medium w-hidden-small w-hidden-tiny" src="/{{directory}}/images/DixieCrystals_Color.svg" width="100"></div>
-  <div class="modal-wrapper txt-centered">
-    <a class="modal side-nav-close-wrapper w-clearfix w-inline-block" data-ix="modal-login-hide" href="#">
-      <div class="main-nav-link-bg-highlight side-nav-close">Cancel</div>
-      <img height="14" src="/{{directory}}/images/side nav close x.svg" width="14"></a>
-    <img class="login logo" src="/{{directory}}/images/Imperial_Brand_Logo.svg" width="100">
-    <div class="w-form">
-      <form data-name="Email Form 2" id="email-form-2" name="email-form-2">
-        <p>Set your password</p>
-        <label for="password-create-2">Type your password</label>
-        <input class="login-input w-input" data-name="Password Create 2" id="password-create-2" maxlength="256" name="password-create-2" placeholder="Password" required="required" type="password">
-        <label class="hidden" for="password-create-confirm-2">Confirm your password</label>
-        <input class="login-input w-input" data-name="Password Create Confirm 2" id="password-create-confirm-2" maxlength="256" name="password-create-confirm-2" placeholder="Confirm Password" required="required" type="password">
-        <input class="btn-login em w-button" data-wait="Please wait..." type="submit" value="Sign in"></form>
-      <div class="w-form-done">
-        <div>Thank you! Your submission has been received!</div>
-      </div>
-      <div class="w-form-fail">
-        <div>Oops! Something went wrong while submitting the form</div>
+      <img class="logo w-hidden-main w-hidden-medium w-hidden-small w-hidden-tiny" src="/{{directory}}/images/DixieCrystals_Color.svg" width="100">
+      {{ create_account }}
+      <div class="login-alt">
+        <a href="#" class="email-login-link">Already have an account?</a>
+        or use
+        <a href="#" class="social-login-link">Social Sign In</a>
       </div>
     </div>
-    <img class="logo w-hidden-main w-hidden-medium w-hidden-small w-hidden-tiny" src="/{{directory}}/images/DixieCrystals_Color.svg" width="100">
-    <div class="login-alt">
-      <a href="#">Already have an account?</a>
-      or use
-      <a href="#">Social Sign In</a>
+    <div id="update-display-name-and-password-wrapper" class="login-steps w-hidden-main">
+      <a class="modal side-nav-close-wrapper w-clearfix w-inline-block" data-ix="modal-login-hide" href="#">
+        <div class="main-nav-link-bg-highlight side-nav-close">Cancel</div>
+        <img height="14" src="/{{directory}}/images/side nav close x.svg" width="14">
+      </a>
+      <img class="login logo" src="/{{directory}}/images/Imperial_Brand_Logo.svg" width="100">
+      {{ update_display_name_and_email }}
+      <img class="logo w-hidden-main w-hidden-medium w-hidden-small w-hidden-tiny" src="/{{directory}}/images/DixieCrystals_Color.svg" width="100">
+      <div class="login-alt">
+        <a href="#" class="email-login-link">Already have an account?</a>
+        or use
+        <a href="#" class="social-login-link">Social Sign In</a>
+      </div>
     </div>
   </div>
-</div>
+{# </div> #}

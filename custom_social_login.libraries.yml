@@ -1,0 +1,5 @@
+custom_social_login:
+  js:
+    js/custom_social_login.js: {}
+  dependencies:
+    - core/jquery
