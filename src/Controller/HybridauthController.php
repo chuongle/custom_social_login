@@ -175,37 +175,4 @@ class HybridauthController extends ControllerBase {
     drupal_set_message('User is created');
     return $user;
   }
-
-  /**
-   * Return user's first name.
-   *
-   * @param int $identifier
-   *
-   * @return string
-   */
-  public function getFirstName($identifier) {
-    
-  }
-
-
-  /**
-   * Return user's last name.
-   *
-   * @param int $identifier
-   *
-   * @return string
-   */
-  public function getLastName($identifier) {
-
-  }
-
-  /**
-   * Return user's email address
-   *
-   * @param int $identifier
-   *
-   * @return string
-   */
-  public function getEmail($identifier) {
-  }
 }
