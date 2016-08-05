@@ -24,6 +24,14 @@ function custom_social_login_help($route_name, RouteMatchInterface $route_match)
   }
 }
 
+function custom_social_login_theme() {
+  $theme['login'] = [
+    'variables' => ['login_form' => NULL, 'create_account' => NULL],
+    'template' => 'login',
+  ];
+  return $theme;
+}
+
 /**
  * Implements hook_schema().
  */
