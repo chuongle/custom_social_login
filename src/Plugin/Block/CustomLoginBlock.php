@@ -21,6 +21,7 @@ class CustomLoginBlock extends BlockBase {
     $email_login = \Drupal::formBuilder()->getForm('Drupal\custom_social_login\Form\EmailLoginForm');
     $create_account = \Drupal::formBuilder()->getForm('Drupal\custom_social_login\Form\CreateAccountForm');
     $update_display_name_and_email = \Drupal::formBuilder()->getForm('Drupal\custom_social_login\Form\UpdateDisplayNameAndPasswordForm');
+    $domain_negotiator = \Drupal::service('domain.negotiator');
 
   	return [
       '#theme' => 'login',
@@ -32,6 +33,7 @@ class CustomLoginBlock extends BlockBase {
       '#login_form' => drupal_render($email_login),
       '#create_account' => drupal_render($create_account),
       '#update_display_name_and_email' => drupal_render($update_display_name_and_email),
+      '#domain' => $domain_negotiator->getActiveId(),
     ];
   }
 

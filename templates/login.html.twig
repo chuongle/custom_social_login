@@ -1,3 +1,9 @@
+{% if domain == 'imperial' %}
+  {% set logo = 'images/Imperial_Brand_Logo.svg' %}
+{% else %}
+  {% set logo = 'images/DixieCrystals_Color.svg' %}
+{% endif %}
+
 <div class="logged-out nav-account-wrapper w-clearfix w-hidden-small w-hidden-tiny">
   <a class="logged-out user-pic-small user-pic-wrapper w-hidden-medium w-hidden-small w-hidden-tiny w-inline-block" href="#"></a>
   <a class="nav-account-signup-spacing tertiary" data-ix="modal-login-show" href="#">Join FREE</a>
@@ -10,8 +16,8 @@
       <a class="modal side-nav-close-wrapper w-clearfix w-inline-block" data-ix="modal-login-hide" href="#">
         <div class="main-nav-link-bg-highlight side-nav-close">Close</div>
         <img height="14" src="/{{directory}}/images/side nav close x.svg" width="14"></a>
-      <img class="login logo" src="/{{directory}}/images/Imperial_Brand_Logo.svg" width="100">
-      <img class="logo" src="/{{directory}}/images/DixieCrystals_Color.svg" width="100">
+      
+      <img class="login logo" src="{{ directory }}/{{ logo }}" width="100">
       <h3>Sign in or create an account</h3>
       <p>
         You need an account to like and rate recipes, comment, and share a recipe with the community.
@@ -30,9 +36,8 @@
       <a class="modal side-nav-close-wrapper w-clearfix w-inline-block" data-ix="modal-login-hide" href="#">
         <div class="main-nav-link-bg-highlight side-nav-close">Cancel</div>
         <img height="14" src="/{{directory}}/images/side nav close x.svg" width="14"></a>
-        <img class="login logo" src="/{{directory}}/images/Imperial_Brand_Logo.svg" width="100">
+        <img class="login logo" src="{{ directory }}/{{ logo }}" width="100">
       {{ login_form }}
-      <img class="logo w-hidden-main w-hidden-medium w-hidden-small w-hidden-tiny" src="/{{directory}}/images/DixieCrystals_Color.svg" width="100">
       <div class="login-alt">
         <a href="#" class="forgot-password-link">Forgot password?</a>
         or use
@@ -44,8 +49,7 @@
         <div class="main-nav-link-bg-highlight side-nav-close">Cancel</div>
         <img height="14" src="/{{directory}}/images/side nav close x.svg" width="14">
       </a>
-      <img class="login logo" src="/{{directory}}/images/Imperial_Brand_Logo.svg" width="100">
-      <img class="logo w-hidden-main w-hidden-medium w-hidden-small w-hidden-tiny" src="/{{directory}}/images/DixieCrystals_Color.svg" width="100">
+      <img class="login logo" src="{{ directory }}/{{ logo }}" width="100">
       {{ create_account }}
       <div class="login-alt">
         <a href="#" class="email-login-link">Already have an account?</a>
@@ -58,9 +62,8 @@
         <div class="main-nav-link-bg-highlight side-nav-close">Cancel</div>
         <img height="14" src="/{{directory}}/images/side nav close x.svg" width="14">
       </a>
-      <img class="login logo" src="/{{directory}}/images/Imperial_Brand_Logo.svg" width="100">
+      <img class="login logo" src="{{ directory }}/{{ logo }}" width="100">
       {{ update_display_name_and_email }}
-      <img class="logo w-hidden-main w-hidden-medium w-hidden-small w-hidden-tiny" src="/{{directory}}/images/DixieCrystals_Color.svg" width="100">
       <div class="login-alt">
         <a href="#" class="email-login-link">Already have an account?</a>
         or use
