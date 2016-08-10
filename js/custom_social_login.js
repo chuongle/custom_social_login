@@ -27,7 +27,10 @@
 	  				e.preventDefault();
 	  				$('.login-steps').addClass('w-hidden-main');
 	  				$('#email-login-wrapper').removeClass('w-hidden-main');
-	  			})
+	  			});
+	  			$('.btn-login.fb, .btn-login.tw, .btn-login.gl').on('click', function(e) {
+	  				Cookies.set('current_page', window.location.pathname+window.location.search);
+	  			});
 	  		});	
 	  	});
 	  }
