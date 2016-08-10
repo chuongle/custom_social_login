@@ -13,7 +13,25 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * @package Drupal\custom_social_login\Controller
  */
 class HybridauthController extends ControllerBase {
-  
+  /**
+   * Router.
+   * This is where we handle redirect logic
+   *
+   */
+  public function router() {
+    $current_user_id = \Drupal::currentUser()->id();
+    $user = user_load($current_user_id);
+    if($_COOKIE['current_page']) {
+      return new RedirectResponse($_COOKIE['current_page'].'?setpassword=true');
+    }
+    return new RedirectResponse('/home?setpassword=true');
+  }
+
+  /**
+   * Endpoint.
+   *
+   *
+   */  
   public function endpoint() {
     custom_social_login_hybridauth_session_start();
     require_once drupal_get_path('module', 'custom_social_login') . '/vendor/hybridauth/hybridauth/hybridauth/index.php';
@@ -26,29 +44,47 @@ class HybridauthController extends ControllerBase {
    *
    */
   public function processAuth($provider) {
-    custom_social_login_hybridauth_session_start();
-    $hybridauth = HybridauthInstance::getHybridauthInstance();
+    if($provider == 'email') {
+      $request = \Drupal::request();
+      if($query = $request->getQueryString()) {
+        $uid = $_GET['uid'];
+        if($user = user_load($uid)) {
+          // $timestamp = $_GET['time'];
+          $timestamp = REQUEST_TIME;
+          $current = REQUEST_TIME;
+          user_login_finalize($user);
+          if($current - $timestamp > 86400) {
+            return new RedirectResponse(\Drupal::url('user.page'));
+          }else {
+            return new RedirectResponse('/router');
+          }
+        }
+      }
+    }else {
+      custom_social_login_hybridauth_session_start();
+      $hybridauth = HybridauthInstance::getHybridauthInstance();
 
-    $error = NULL;
-    $user_profile = NULL;
-    try {
-      $authentication = $hybridauth->authenticate(ucwords($provider));
-      $user_profile = (array) ($authentication->getUserProfile());
-      $user_profile['provider'] = $provider;
-    }
-    catch(Exception $e) {
-      \Drupal::logger('custom_social_login')->error('Error when requesting User Profile from ' . $provider);
-      $error = $e->getCode();
-    }
-    
-    if (!is_null($error)) {
-      $this->handleError($error); 
-    } else {
-      $this->startProcessAuth($user_profile);
-      drupal_set_message('User is login');
-    }
+      $error = NULL;
+      $user_profile = NULL;
+      try {
+        $authentication = $hybridauth->authenticate(ucwords($provider));
+        $user_profile = (array) ($authentication->getUserProfile());
+        $user_profile['provider'] = $provider;
+      }
+      catch(Exception $e) {
+        \Drupal::logger('custom_social_login')->error('Error when requesting User Profile from ' . $provider);
+        $error = $e->getCode();
+      }
+      
+      if (!is_null($error)) {
+        $this->handleError($error); 
+      } else {
+        $this->startProcessAuth($user_profile);
+        drupal_set_message('User is login');
+      }
 
-    return new RedirectResponse(\Drupal::url('user.page'));
+      return new RedirectResponse('/router');
+    }
   }
 
   public function handleError($error) {

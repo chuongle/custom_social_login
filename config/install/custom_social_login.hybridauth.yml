@@ -7,20 +7,17 @@ imperial:
         id: google1_id
         secret: google1_secret
         scope: https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email
-      hauth_return_to: /
     Facebook:
       enabled: true
       keys:
         id: facebook1_id
         secret: facebook1_secret
       scope: 'email, user_about_me'
-      hauth_return_to: /
     Twitter:
       enabled: true
       keys:
         key: twitter1_key
         secret: twitter1_secret
-      hauth_return_to: /
 dixie:
   base_url: '/hybridauth/endpoint'
   providers:
@@ -30,17 +27,14 @@ dixie:
         id: google2_id
         secret: google2_secret
         scope: https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email
-      hauth_return_to: /
     Facebook:
       enabled: true
       keys:
         id: facebook2_id
         secret: facebook2_secret
       scope: 'email, user_about_me'
-      hauth_return_to: /
     Twitter:
       enabled: true
       keys:
         key: twitter2_key
         secret: twitter2_secret
-      hauth_return_to: /

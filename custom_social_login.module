@@ -228,7 +228,7 @@ function custom_social_login_hybridauth_session_start() {
   if (Drupal::request()->isSecure()) {
   	$db = \Drupal::database();
     // NEED TO CIRCLE BACK TO USE CORRECT COLUMN FROM DATABASE
-    $session = $db->query('SELECT session FROM {sessions} WHERE sid = :sid AND ssid = :sid', array('sid' => session_id()))->fetchField();
+    $session = $db->query('SELECT session FROM {sessions} WHERE sid = :sid', array('sid' => session_id()))->fetchField();
     if ($session) {
       // Overwrite $_SESSION with the data.
       session_decode($session);

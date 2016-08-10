@@ -57,3 +57,19 @@ custom_social_login.update_display_name_and_password_form:
     _title: 'UpdateDisplayNameAndPasswordForm'
   requirements:
     _access: 'TRUE'
+
+custom_social_login.update_display_name:
+  path: '/custom_social_login/form/update_display_name'
+  defaults:
+    _form: '\Drupal\custom_social_login\Form\UpdateDisplayName'
+    _title: 'UpdateDisplayName'
+  requirements:
+    _access: 'TRUE'
+
+custom_social_login.hybridauth_controller_router:
+  path: '/router'
+  defaults:
+    _controller: '\Drupal\custom_social_login\Controller\HybridauthController::router'
+    _title: 'Router'
+  requirements:
+    _access: 'TRUE'
