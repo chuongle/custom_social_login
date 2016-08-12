@@ -7,6 +7,8 @@
 
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\custom_social_login\HybridauthInstance;
+use \Drupal\views\ViewExecutable;
+use Drupal\views\Plugin\views\query\QueryPluginBase;
 
 /**
  * Implements hook_help().
@@ -34,6 +36,14 @@ function custom_social_login_theme() {
     ],
     'template' => 'login',
   ];
+
+  $theme['setpassword'] = [
+    'variables' => [
+      'set_password_form' => NULL,
+    ],
+    'template' => 'setpassword',
+  ];
+
   return $theme;
 }
 

@@ -19,12 +19,15 @@ class HybridauthController extends ControllerBase {
    *
    */
   public function router() {
-    $current_user_id = \Drupal::currentUser()->id();
-    $user = user_load($current_user_id);
-    if($_COOKIE['current_page']) {
-      return new RedirectResponse($_COOKIE['current_page'].'?setpassword=true');
+    $uid = $_GET['uid'];
+    $user = user_load($uid);
+    if($user->get('access')->value == 0) {
+      user_login_finalize($user);
+      if($_COOKIE['current_page']) {
+        return new RedirectResponse($_COOKIE['current_page'].'?setpassword=true');
+      }
+      return new RedirectResponse('/login?setpassword=true');
     }
-    return new RedirectResponse('/home?setpassword=true');
   }
 
   /**
@@ -49,14 +52,13 @@ class HybridauthController extends ControllerBase {
       if($query = $request->getQueryString()) {
         $uid = $_GET['uid'];
         if($user = user_load($uid)) {
-          // $timestamp = $_GET['time'];
-          $timestamp = REQUEST_TIME;
+          $timestamp = $_GET['time'];
           $current = REQUEST_TIME;
-          user_login_finalize($user);
           if($current - $timestamp > 86400) {
+            user_login_finalize($user);
             return new RedirectResponse(\Drupal::url('user.page'));
           }else {
-            return new RedirectResponse('/router');
+            return new RedirectResponse('/router?uid='.$uid);
           }
         }
       }

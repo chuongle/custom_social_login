@@ -50,19 +50,11 @@ custom_social_login.create_account_form:
   requirements:
     _access: 'TRUE'
 
-custom_social_login.update_display_name_and_password_form:
-  path: '/custom_social_login/form/update_display_name_and_password'
+custom_social_login.setpassword:
+  path: '/custom_social_login/form/setpassword'
   defaults:
-    _form: '\Drupal\custom_social_login\Form\UpdateDisplayNameAndPasswordForm'
-    _title: 'UpdateDisplayNameAndPasswordForm'
-  requirements:
-    _access: 'TRUE'
-
-custom_social_login.update_display_name:
-  path: '/custom_social_login/form/update_display_name'
-  defaults:
-    _form: '\Drupal\custom_social_login\Form\UpdateDisplayName'
-    _title: 'UpdateDisplayName'
+    _form: '\Drupal\custom_social_login\Form\SetPassword'
+    _title: 'SetPassword'
   requirements:
     _access: 'TRUE'
 
